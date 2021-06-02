@@ -15,7 +15,7 @@ max_edge = 7
 
 
 def generateFood():
-    # Spawn random food
+    # Generate food
         retryFlag = True
         while retryFlag:
             foodPositionX = random.randint(0, 7)
@@ -111,18 +111,19 @@ while True:
             snakePositionX[0] += directionX
             snakePositionY[0] += directionY
 
-        # Generate food
+        # Generate new food
         if generateNewFood:
             generateNewFood = False
             foodPositionX, foodPositionY = generateFood()
 
-        # Update the screen
-        if not bordersCrossed:
+        # Refresh the screen
+        try:
           s.clear()
           s.set_pixel(foodPositionX, foodPositionY, RED)
           for x, y in zip(snakePositionX, snakePositionY):
               s.set_pixel(x, y, GREEN)
-        else:
+        # If the snake goes over the screen boundaries, game is over
+        except ValueError:
           gameOverFlag = True
 
         # Snake speed 
